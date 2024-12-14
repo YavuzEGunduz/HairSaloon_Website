@@ -1,0 +1,21 @@
+﻿@model List<Employee>
+<html>
+<head>
+	<link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/twitter-bootstrap/css/bootstrap.rtl.css" rel="stylesheet" />
+	<link href="~/twitter-bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet" />
+</head>
+<body>
+	<table class="table table-bordered">
+		@foreach (var k in Model)
+		{
+			<tr>
+				<td>@k.Id</td>
+				<td>@k.Name</td>
+				<td>@k.Speciality</td>
+			</tr>
+		}
+	</table>
+</body>
+		</html>
