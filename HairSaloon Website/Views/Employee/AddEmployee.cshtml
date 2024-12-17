@@ -1,0 +1,16 @@
+﻿@model HairSaloon_Website.Models.Employee
+
+<br />
+<form class="form-group" method="post">
+	@Html.LabelFor(x=>x.Name)
+	@Html.TextBoxFor(X=>X.Name ,new {@class="form-control"})	
+	@Html.LabelFor(x=>x.Speciality)
+	@Html.TextBoxFor(X=>X.Speciality ,new {@class="form-control"})
+	@Html.LabelFor(x=>x.Age)
+	@Html.TextBoxFor(X=>X.Age,new {@class="form-control"})
+	@Html.LabelFor(x=>x.Working_hours)
+	@Html.TextBoxFor(X=>X.Working_hours ,new {@class="form-control"})
+	@Html.LabelFor(x=>x.Review)
+	@Html.TextBoxFor(X=>X.Review ,new {@class="form-control"})
+
+</form>

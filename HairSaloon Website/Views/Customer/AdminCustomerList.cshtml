@@ -1,0 +1,27 @@
+﻿@model List<Customer>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ad Soyad</th>
+            <th>İşlemler</th>
+            <th>Fiyat</th>
+            <th>Email</th>
+            <th>Numara</th>
+        </tr
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.Name_Surname</td>
+                <td>@customer.Order</td>
+                <td>@customer.Price</td>
+                <td>@customer.Email</td>
+                <td>@customer.Phone</td>
+            </tr>
+        }
+    </tbody>
+</table>
