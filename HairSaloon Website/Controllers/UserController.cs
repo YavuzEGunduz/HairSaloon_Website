@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairSaloon_Website.Controllers
 {
-    public class CustomerController : Controller
+    public class UserController : Controller
     {
 
             public readonly Context _context;
-            public CustomerController(Context context)
+            public UserController(Context context)
             {
                 _context = context;
             }
 
-            public IActionResult AdminCustomerList()
+            public IActionResult AdminUserList()
             {
-                List<Customer> cst = _context.Customers.ToList();
+                List<User> cst = _context.Users.ToList();
 
                 return View(cst);
             }
