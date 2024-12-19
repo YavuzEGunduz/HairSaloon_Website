@@ -1,5 +1,6 @@
 ﻿using HairSaloon_Website.Data;
 using HairSaloon_Website.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,6 +14,7 @@ namespace HairSaloon_Website.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Stuff()
         {
             List<Employee> stuff = _context.Employees.ToList();
