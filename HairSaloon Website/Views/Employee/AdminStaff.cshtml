@@ -1,0 +1,33 @@
+﻿@model List<Employee>
+
+<h2><b>Employee Managment</b></h2>
+
+<br />
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>İsim</th>
+            <th>Yaş</th>
+            <th>İşlemler</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Age</td>
+                <td>@employee.Id</td>
+				<td><a href="/Employee/BringEmployee/@employee.Id" class="btn btn-warning" >Edit</a></td>
+				<td><a href="/Employee/DeleteEmployee/@employee.Id" class="btn btn-danger" >Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Employee/AddEmployee/" class="btn btn-primary">Ekle</a>

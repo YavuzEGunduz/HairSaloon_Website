@@ -12,11 +12,11 @@ namespace HairSaloon_Website.Models
         public string Name { get; set; }
 
         public int Age { get; set; }
-        public List<EmployeeCategory> Speciality { get; set; }
+        public List<EmployeeCategory> Speciality { get; set; } = new List<EmployeeCategory>();
 
-        public float Review { get; set; }
-        public int Working_hours{get; set;}
-        public string ImageUrl { get; set; }
+        public float Review { get; set; } = 15;
+        public int Working_hours { get; set; } = 9;
+        public string ImageUrl { get; set; } = "15";
 
 
 

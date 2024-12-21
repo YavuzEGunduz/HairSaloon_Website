@@ -1,25 +1,28 @@
 ﻿@model HairSaloon_Website.Models.Employee
 
 <br />
-<form class="form-group" method="post">
+@using (Html.BeginForm("EditEmployee","Employee",FormMethod.Post))
+{
 
 	<b>@Html.LabelFor(x=>x.Name)</b>
-	@Html.TextBoxFor(X=>X.Name ,new {@class="form-control"})	
+	@Html.TextBoxFor(X=>X.Name ,new {@class="form-control"})		
+	
+	<b>@Html.LabelFor(x=>x.Id)</b>
+	@Html.TextBoxFor(X=>X.Id ,new {@class="form-control"})	
 
 	<b>	@Html.LabelFor(x => x.Speciality)</b>
-
 	@Html.TextBoxFor(X=>X.Speciality ,new {@class="form-control"})
+
 	<b>	@Html.LabelFor(x => x.Age)</b>
-
 	@Html.TextBoxFor(X=>X.Age,new {@class="form-control"})
+
 	<b>	@Html.LabelFor(x => x.Working_hours)</b>
-
 	@Html.TextBoxFor(X=>X.Working_hours ,new {@class="form-control"})
+	
 	<b>	@Html.LabelFor(x => x.Review)</b>
-
 	@Html.TextBoxFor(X=>X.Review ,new {@class="form-control"})
 
 	<br />
 
-	<button class="btn btn-info">Add</button>
-</form>
+	<button class="btn btn-default" >Done</button>
+}

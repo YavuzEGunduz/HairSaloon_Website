@@ -14,19 +14,19 @@ namespace HairSaloon_Website.Controllers
             _context = context;
         }
 
-        [Authorize]
-        public IActionResult Stuff()
+        //[Authorize]
+        public IActionResult Staff()
         {
-            List<Employee> stuff = _context.Employees.ToList();
+            List<Employee> staff = _context.Employees.ToList();
 
-            return View(stuff);
+            return View(staff);
         }
 
-        public IActionResult AdminStuff()
+        public IActionResult AdminStaff()
         {
-            List<Employee> stuffad = _context.Employees.ToList();
+            List<Employee> staffad = _context.Employees.ToList();
 
-            return View(stuffad);
+            return View(staffad);
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace HairSaloon_Website.Controllers
 
             _context.Employees.Add(employee);
             _context.SaveChanges();
-            return RedirectToAction("AdminStuff");
+            return RedirectToAction("AdminStaff");
 
         }
 
@@ -48,32 +48,30 @@ namespace HairSaloon_Website.Controllers
         public IActionResult DeleteEmployee(int id)
         {
             var employee = _context.Employees.Find(id);
-            if (employee != null)
-            {
-                _context.Employees.Remove(employee);
-                _context.SaveChanges();
-            }
-            return RedirectToAction("AdminList");
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+            return RedirectToAction("AdminStaff");
         }
 
-        public IActionResult EditEmployee(int id)
+        public IActionResult BringEmployee(int id)
         {
             var employee = _context.Employees.Find(id);
-            return View(employee);
+            return View("BringEmployee",employee);
         }
 
         [HttpPost]
         public IActionResult EditEmployee(Employee updatedEmployee)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Employees.Update(updatedEmployee);
-                _context.SaveChanges();
-                return RedirectToAction("AdminList");
-            }
-            return View(updatedEmployee);
+            var employee =_context.Employees.Find(updatedEmployee.Id);
+            employee .Name = updatedEmployee.Name;
+            employee .Age = updatedEmployee.Age;
+            employee .Working_hours = updatedEmployee.Working_hours;
+            employee .Review = updatedEmployee.Review;
+            employee .ImageUrl = updatedEmployee.ImageUrl;
+            _context.SaveChanges();
+            return RedirectToAction("AdminStaff");
         }
 
 
     }
-}
+} 
