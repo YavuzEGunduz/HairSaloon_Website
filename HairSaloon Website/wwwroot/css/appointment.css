@@ -1,0 +1,13 @@
+﻿.box {
+    position: relative;
+    margin: 2% 5%;
+    border: 2px solid #333;
+    border-radius: 8px;
+    height: 45%;
+}
+
+    .box .btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
