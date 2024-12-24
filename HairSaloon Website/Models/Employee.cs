@@ -1,4 +1,4 @@
-﻿using HairSaloon_Website.Data.Enum;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace HairSaloon_Website.Models
@@ -12,7 +12,8 @@ namespace HairSaloon_Website.Models
         public string Name { get; set; }
 
         public int Age { get; set; }
-        public List<EmployeeCategory> Speciality { get; set; } = new List<EmployeeCategory>();
+
+        public ICollection<EmployeeProcess> EmployeeProcess { get; set; }
 
         public float Review { get; set; } = 15;
         public int Working_hours { get; set; } = 9;
