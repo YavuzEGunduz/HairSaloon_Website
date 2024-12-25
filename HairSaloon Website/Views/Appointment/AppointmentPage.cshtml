@@ -13,6 +13,9 @@
 <body>
     <div class="container-fluid vh-100 d-flex flex-column">
         <div class="box">
+			<label for="sel1">Choose Date </label>
+			<input type="datetime-local" class="form-control" id="datetimeSelect" onchange="enableFields()" />
+			<br
 			<label for="sel1">Choose Process </label>
 			<select class="form-control" id="sel1">
 				@foreach (var employee in Model)

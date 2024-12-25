@@ -1,4 +1,4 @@
-﻿using HairSaloon_Website.Data.Enum;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace HairSaloon_Website.Models

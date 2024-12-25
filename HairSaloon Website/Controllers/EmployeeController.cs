@@ -17,16 +17,16 @@ namespace HairSaloon_Website.Controllers
         //[Authorize]
         public IActionResult Staff()
         {
-            List<Employee> staff = _context.Employees.ToList();
+           
 
-            return View(staff);
+            return View();
         }
 
         public IActionResult AdminStaff()
         {
-            List<Employee> staffad = _context.Employees.ToList();
+            
 
-            return View(staffad);
+            return View();
         }
 
         [HttpGet]
