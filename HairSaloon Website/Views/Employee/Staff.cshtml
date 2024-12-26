@@ -41,10 +41,11 @@
             {
                 <div class="col-md-4">
                     <div class="employee-card">
-                        <img src="~/images/@employee.ImageUrl" alt="@employee.Name">
+                        <img src="@employee.ImageUrl" alt="@employee.Name">
                         <div class="employee-details">
                             <h5>@employee.Name</h5>
-                            <p>Yaş: @employee.Age</p>
+                            <p>@employee.Age</p>
+                            <p>WorkTime: @employee.Working_hours</p>
                         </div>
                     </div>
                 </div>

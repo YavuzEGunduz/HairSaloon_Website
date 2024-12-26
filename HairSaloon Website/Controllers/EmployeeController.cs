@@ -18,32 +18,39 @@ namespace HairSaloon_Website.Controllers
         public IActionResult Staff()
         {
            
-
-            return View();
+            var stafflist=_context.Employees.ToList();
+            return View(stafflist);
         }
 
         public IActionResult AdminStaff()
         {
-            
 
-            return View();
+            var stafflist = _context.Employees.ToList();
+            return View(stafflist);
+        }
+        [HttpGet] 
+        public IActionResult AddEmployee() 
+        { 
+            return View(); 
         }
 
-        [HttpGet]
-        public IActionResult AddEmployee()
-        {
-            return View();
+        [HttpPost] 
+        public IActionResult AddEmployee(Employee employee) 
+        { 
+            if (employee.ImageFile != null && employee.ImageFile.Length > 0) 
+            { 
+                var fileName = Path.GetFileName(employee.ImageFile.FileName); 
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName); 
+                using (var stream = new FileStream(filePath, FileMode.Create)) 
+                { 
+                    employee.ImageFile.CopyTo(stream); 
+                }
+                employee.ImageUrl = "/images/" + fileName; 
+            }
+            _context.Employees.Add(employee); 
+            _context.SaveChanges(); 
+            return RedirectToAction("AdminStaff"); 
         }
-        [HttpPost]
-        public IActionResult AddEmployee(Employee employee)
-        {
-
-            _context.Employees.Add(employee);
-            _context.SaveChanges();
-            return RedirectToAction("AdminStaff");
-
-        }
-
 
         public IActionResult DeleteEmployee(int id)
         {
@@ -66,7 +73,6 @@ namespace HairSaloon_Website.Controllers
             employee .Name = updatedEmployee.Name;
             employee .Age = updatedEmployee.Age;
             employee .Working_hours = updatedEmployee.Working_hours;
-            employee .Review = updatedEmployee.Review;
             employee .ImageUrl = updatedEmployee.ImageUrl;
             _context.SaveChanges();
             return RedirectToAction("AdminStaff");

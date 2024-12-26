@@ -1,21 +1,21 @@
 ﻿@model HairSaloon_Website.Models.Employee
 
-<br />
-<form class="form-group" method="post">
-
-	<b>@Html.LabelFor(x=>x.Name)</b>
-	@Html.TextBoxFor(X=>X.Name ,new {@class="form-control"})	
-
-
-	@Html.TextBoxFor(X=>X.Age,new {@class="form-control"})
-	<b>	@Html.LabelFor(x => x.Working_hours)</b>
-
-	@Html.TextBoxFor(X=>X.Working_hours ,new {@class="form-control"})
-	<b>	@Html.LabelFor(x => x.Review)</b>
-
-	@Html.TextBoxFor(X=>X.Review ,new {@class="form-control"})
-
-	<br />
-
-	<button class="btn btn-info">Add</button>
+<form asp-action="AddEmployee" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Working_hours"></label>
+        <input asp-for="Working_hours" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile">Resim Yükle</label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Ekle</button>
 </form>

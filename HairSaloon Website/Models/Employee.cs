@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HairSaloon_Website.Models
 {
@@ -15,11 +16,9 @@ namespace HairSaloon_Website.Models
 
         public ICollection<EmployeeProcess> EmployeeProcess { get; set; }
 
-        public float Review { get; set; } = 15;
         public int Working_hours { get; set; } = 9;
-        public string ImageUrl { get; set; } = "15";
-
-
+        public string ImageUrl { get; set; }
+        [NotMapped] public IFormFile ImageFile { get; set; }
 
 
     }

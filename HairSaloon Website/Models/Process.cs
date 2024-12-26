@@ -10,6 +10,8 @@ namespace HairSaloon_Website.Models
         public string pName { get; set; }
         public int Price { get; set; }
 
+        public int Time { get; set; }
+
         public ICollection<EmployeeProcess> EmployeeProcess{ get; set; }
 
     }

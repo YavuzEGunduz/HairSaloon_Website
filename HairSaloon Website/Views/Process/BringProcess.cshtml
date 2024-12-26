@@ -1,0 +1,20 @@
+﻿@model HairSaloon_Website.Models.Process
+
+<br />
+@using (Html.BeginForm("EditProcess", "Process", FormMethod.Post))
+{
+
+	<b>@Html.LabelFor(x => x.pName)</b>
+	@Html.TextBoxFor(X => X.pName, new { @class = "form-control" })
+
+	<b>@Html.LabelFor(x => x.Time)</b>
+	@Html.TextBoxFor(X => X.Time, new { @class = "form-control" })
+
+
+	<b>	@Html.LabelFor(x => x.Price)</b>
+	@Html.TextBoxFor(X => X.Price, new { @class = "form-control" })
+
+	<br />
+
+	<button class="btn btn-default">Done</button>
+}

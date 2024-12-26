@@ -1,21 +1,12 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace HairSaloon_Website.Models
+public class User : IdentityUser<string>
 {
-    public class User : IdentityUser
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        public string Name_Surname{ get; set; }
-        public string Email { get; set; }
-        public string Password{ get; set; }
-        public string Phone { get; set; }
-        public float Price { get; set; }
-
-    }
-
+    [Key]
+    public new int Id { get; set; }
+    public new string Email { get; set; }
+    public new string Password { get; set; }
+    public string Name_Surname { get; set; }
+    public string Phone { get; set; }
 }

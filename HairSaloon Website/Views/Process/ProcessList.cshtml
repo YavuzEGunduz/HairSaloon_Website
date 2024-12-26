@@ -1,0 +1,33 @@
+﻿@model List<Process>
+
+<h2><b>Process Managment</b></h2>
+
+<br />
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Process</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.pName</td>
+                <td>@employee.Time</td>
+                <td>@employee.Price</td>
+                <td><a href="/Process/BringProcess/@employee.Id" class="btn btn-warning">Edit</a></td>
+                <td><a href="/Process/DeleteProcess/@employee.Id" class="btn btn-danger">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Process/AddProcess/" class="btn btn-primary">Ekle</a>
