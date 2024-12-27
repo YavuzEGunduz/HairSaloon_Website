@@ -46,6 +46,15 @@
                             <h5>@employee.Name</h5>
                             <p>@employee.Age</p>
                             <p>WorkTime: @employee.Working_hours</p>
+                            @if (employee.EmployeeProcess != null && employee.EmployeeProcess.Any())
+                            {
+                                var processNames = string.Join(" / ", employee.EmployeeProcess.OrderBy(p => p.Process.pName).Select(p => p.Process.pName));
+                                <p>@processNames</p>
+                            }
+                            else
+                            {
+                                <p>No Process</p>
+                            }
                         </div>
                     </div>
                 </div>

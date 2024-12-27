@@ -1,0 +1,25 @@
+﻿@model List<HairSaloon_Website.Models.Appointment>
+
+<h2>Randevu Listesi</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Tarih</th>
+            <th scope="col">Çalışan</th>
+            <th scope="col">Hizmet</th>
+            <th scope="col">Saat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@appointment.Employee.Name</td>
+                <td>@appointment.Process.pName</td>
+                <td>@appointment.Date.ToShortTimeString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

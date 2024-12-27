@@ -18,7 +18,8 @@ namespace HairSaloon_Website.Models
 
         public int Working_hours { get; set; } = 9;
         public string ImageUrl { get; set; }
-        [NotMapped] public IFormFile ImageFile { get; set; }
+        [NotMapped] 
+        public IFormFile ImageFile { get; set; }
 
 
     }

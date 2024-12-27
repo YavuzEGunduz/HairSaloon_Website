@@ -8,10 +8,10 @@ namespace HairSaloon_Website.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> signInManager;
-        private readonly UserManager<User> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
@@ -26,16 +26,14 @@ namespace HairSaloon_Website.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "email or password is incorrect");
-                    return View(model);  
-                }
+
+                ModelState.AddModelError("", "email or password is incorrect");  
+
             }
 
             return View(model);
@@ -52,16 +50,17 @@ namespace HairSaloon_Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                User users = new User()
+                var users = new IdentityUser()
                 {
-                    Name_Surname = model.Name_Surname,
+                    UserName = model.Email,
                     Email = model.Email,
-                    Password = model.Password,
+                    PasswordHash = model.Password,
                 };
                 var result = await userManager.CreateAsync(users, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login", "Account");
+                    await signInManager.SignInAsync(users,false);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -69,7 +68,6 @@ namespace HairSaloon_Website.Controllers
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    return View(model);
 
                 }
                 
@@ -81,7 +79,7 @@ namespace HairSaloon_Website.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
     }

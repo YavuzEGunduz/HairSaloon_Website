@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using HairSaloon_Website.Data;
 using HairSaloon_Website.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace HairSaloon_Website.Controllers
@@ -9,78 +11,54 @@ namespace HairSaloon_Website.Controllers
     public class AppointmentController : Controller
     {
         private readonly Context _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AppointmentController(Context context)
+        public AppointmentController(Context context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            var appointments = _context.Appointments.Include(a => a.aEmployee).ToList();
+            var appointments = _context.Appointments
+                .Include(a => a.Process)
+                .Include(a => a.Employee)
+                .ToList(); 
             return View(appointments);
         }
 
         [HttpGet]
         public IActionResult AddAppointment()
         {
-            ViewData["Processes"] = _context.Processes.ToList();
+            ViewBag.Employees = _context.Employees.ToList();
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddAppointment(Appointment appointment)
+        public async Task<IActionResult> AddAppointment(Appointment appointment)
         {
-            if (ModelState.IsValid)
-            {
-                appointment.aUserId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).Id;
-                _context.Appointments.Add(appointment);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewData["Processes"] = _context.Processes.ToList();
-            return View(appointment);
-        }
+            var user = await _userManager.GetUserAsync(User);
 
-        public IActionResult DetailsAppointment(int id)
-        {
-            var appointment = _context.Appointments.Include(a => a.aEmployee).FirstOrDefault(a => a.aId == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            return View(appointment);
+            appointment.UserId = user.Id;
+
+
+                _context.Appointments.Add(appointment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            
+
         }
 
         [HttpGet]
-        public IActionResult BringAppointment(int id)
+        public JsonResult GetProcessesByEmployee(int employeeId)
         {
-            var appointment = _context.Appointments.Find(id);
-            return View("EditAppointment", appointment);
-        }
-
-        [HttpPost]
-        public IActionResult EditAppointment(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Appointments.Update(appointment);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewData["Employees"] = _context.Employees.ToList();
-            return View(appointment);
-        }
-
-        public IActionResult DeleteAppointment(int id)
-        {
-            var appointment = _context.Appointments.Find(id);
-            if (appointment != null)
-            {
-                _context.Appointments.Remove(appointment);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index));
+            var processes = _context.EmployeeProcesess
+                                    .Where(ep => ep.EmployeeId == employeeId)
+                                    .Include(ep => ep.Process)
+                                    .Select(ep => new { ep.Process.Id, ep.Process.pName })
+                                    .ToList();
+            return Json(processes);
         }
     }
 }

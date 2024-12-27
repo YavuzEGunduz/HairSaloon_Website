@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairSaloon_Website.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241220133227_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241227144914_new")]
+    partial class @new
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,38 @@ namespace HairSaloon_Website.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("HairSaloon_Website.Models.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProcessId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Appointments");
+                });
 
             modelBuilder.Entity("HairSaloon_Website.Models.Employee", b =>
                 {
@@ -44,19 +76,58 @@ namespace HairSaloon_Website.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Review")
-                        .HasColumnType("real");
-
-                    b.PrimitiveCollection<string>("Speciality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Working_hours")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("HairSaloon_Website.Models.EmployeeProcess", b =>
+                {
+                    b.Property<int>("EmployeeProcessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeProcessId"));
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProcessId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeProcessId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.ToTable("employeesProcess");
+                });
+
+            modelBuilder.Entity("HairSaloon_Website.Models.Process", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<string>("pName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Processes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -123,11 +194,6 @@ namespace HairSaloon_Website.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -179,10 +245,6 @@ namespace HairSaloon_Website.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator().HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -266,30 +328,50 @@ namespace HairSaloon_Website.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HairSaloon_Website.Models.User", b =>
+            modelBuilder.Entity("HairSaloon_Website.Models.Appointment", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("HairSaloon_Website.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Name_Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasOne("HairSaloon_Website.Models.Process", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.PrimitiveCollection<string>("Order")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("Employee");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("Process");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Navigation("User");
+                });
 
-                    b.HasDiscriminator().HasValue("User");
+            modelBuilder.Entity("HairSaloon_Website.Models.EmployeeProcess", b =>
+                {
+                    b.HasOne("HairSaloon_Website.Models.Employee", "Employee")
+                        .WithMany("EmployeeProcess")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HairSaloon_Website.Models.Process", "Process")
+                        .WithMany("EmployeeProcess")
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Process");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -341,6 +423,16 @@ namespace HairSaloon_Website.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HairSaloon_Website.Models.Employee", b =>
+                {
+                    b.Navigation("EmployeeProcess");
+                });
+
+            modelBuilder.Entity("HairSaloon_Website.Models.Process", b =>
+                {
+                    b.Navigation("EmployeeProcess");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,13 @@
 ﻿@model HairSaloon_Website.Models.Employee
 
-<form asp-action="AddEmployee" enctype="multipart/form-data" method="post">
+@{
+    ViewData["Title"] = "Yeni Çalışan Ekle";
+    var processes = ViewBag.Processes as List<HairSaloon_Website.Models.Process>;
+}
+
+<h2>Yeni Çalışan Ekle</h2>
+
+<form asp-action="AddEmployee" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -16,6 +23,15 @@
     <div class="form-group">
         <label asp-for="ImageFile">Resim Yükle</label>
         <input asp-for="ImageFile" type="file" class="form-control" />
+    </div>
+    <div class="input-box">
+        @foreach (var process in processes)
+        {
+            <div>
+                <input type="checkbox" name="selectedProcesses" value="@process.Id" />
+                <label>@process.pName</label>
+            </div>
+        }
     </div>
     <button type="submit" class="btn btn-primary">Ekle</button>
 </form>

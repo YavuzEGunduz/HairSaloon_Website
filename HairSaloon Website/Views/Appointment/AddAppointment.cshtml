@@ -1,41 +1,50 @@
 ﻿@model HairSaloon_Website.Models.Appointment
+
 @{
     ViewData["Title"] = "Yeni Randevu";
-    var processes = ViewData["Processes"] as List<HairSaloon_Website.Models.Process>;
+    var employees = ViewBag.Employees as List<HairSaloon_Website.Models.Employee>;
 }
 
 <h2>Yeni Randevu Oluştur</h2>
 
 <form asp-action="AddAppointment" method="post">
     <div class="form-group">
-        <label asp-for="aDate">Randevu Tarihi</label>
-        <input asp-for="aDate" class="form-control" type="datetime-local" />
+        <label asp-for="Date">Randevu Tarihi</label>
+        <input asp-for="Date" class="form-control" type="datetime-local" />
     </div>
     <div class="form-group">
-        <label asp-for="aProcessId">Hizmet Seçimi</label>
-        <select asp-for="aProcessId" class="form-control" asp-items="@(new SelectList(processes, "Id", "Name"))" id="process-select"></select>
+        <label asp-for="EmployeeId">Çalışan Seçimi</label>
+        <select asp-for="EmployeeId" class="form-control" id="employee-select">
+            <option value="">-- Çalışan Seçin --</option>
+            @foreach (var employee in employees)
+            {
+                <option value="@employee.Id">@employee.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
-        <label asp-for="aEmployeeId">Çalışan Seçimi</label>
-        <select asp-for="aEmployeeId" class="form-control" id="employee-select"></select>
+        <label asp-for="ProcessId">Hizmet Seçimi</label>
+        <select asp-for="ProcessId" class="form-control" id="process-select">
+            <option value="">-- Hizmet Seçin --</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Oluştur</button>
 </form>
 
 @section Scripts {
     <script>
-        document.getElementById('process-select').addEventListener('change', function () {
-            var processId = this.value;
-            fetch('/Appointment/GetEmployeesByProcess?processId=' + processId)
+        document.getElementById('employee-select').addEventListener('change', function () {
+            var employeeId = this.value;
+            fetch('/Appointment/GetProcessesByEmployee?employeeId=' + employeeId)
                 .then(response => response.json())
                 .then(data => {
-                    var employeeSelect = document.getElementById('employee-select');
-                    employeeSelect.innerHTML = '';
-                    data.forEach(employee => {
+                    var processSelect = document.getElementById('process-select');
+                    processSelect.innerHTML = '<option value="">-- Hizmet Seçin --</option>';
+                    data.forEach(process => {
                         var option = document.createElement('option');
-                        option.value = employee.id;
-                        option.text = employee.name;
-                        employeeSelect.appendChild(option);
+                        option.value = process.id;
+                        option.text = process.pName;
+                        processSelect.appendChild(option);
                     });
                 });
         });

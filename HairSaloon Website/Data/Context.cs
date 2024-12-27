@@ -15,9 +15,8 @@ namespace HairSaloon_Website.Data
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Process> Processes { get; set; }
-        public DbSet<User> Users { get; set; }
 
-        public DbSet<EmployeeProcess> employeesProcess { get; set; }
+        public DbSet<EmployeeProcess> EmployeeProcesess { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder buildmodel)
@@ -26,16 +25,12 @@ namespace HairSaloon_Website.Data
 
             buildmodel.Entity<EmployeeProcess>()
                 .HasKey(x => x.EmployeeProcessId);
-
-            buildmodel.Entity<EmployeeProcess>()
-                .HasOne(x => x.Employee)
-                .WithMany(x => x.EmployeeProcess)
-                .HasForeignKey(x => x.EmployeeId);
             
             buildmodel.Entity<EmployeeProcess>()
                 .HasOne(x => x.Process)
                 .WithMany(x => x.EmployeeProcess)
-                .HasForeignKey(x => x.ProcessId);
+                .HasForeignKey(x => x.ProcessId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             buildmodel.Entity<EmployeeProcess>()
                 .HasOne(x => x.Employee)
@@ -43,6 +38,11 @@ namespace HairSaloon_Website.Data
                 .HasForeignKey(x => x.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            buildmodel.Entity<Appointment>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 

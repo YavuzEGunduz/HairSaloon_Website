@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HairSaloon_Website.Models
@@ -6,22 +7,22 @@ namespace HairSaloon_Website.Models
     public class Appointment
     {
         [Key]
-        public int aId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime aDate { get; set; }
+        public DateTime Date { get; set; }
 
         [Required]
-        public int aProcessId { get; set; }
-        public Process aProcess { get; set; }
+        public int ProcessId { get; set; }
+        public Process Process { get; set; }
 
         [Required]
-        public int aUserId { get; set; }
-        public User aUser { get; set; }
+        public string UserId { get; set; }
+        public IdentityUser User { get; set; }
 
         [Required]
-        public int aEmployeeId { get; set; }
-        public Employee aEmployee { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
     }
 }
