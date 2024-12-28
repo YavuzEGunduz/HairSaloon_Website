@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+label {
+    color: #ffffff; /* Metin rengi beyaz */
+    text-shadow: 2px 2px 0 #f39c12; /* Sarý gölge */
+    padding: 10px 15px; /* Boþluk */
+    font-weight: bold; /* Kalýn font */
+    letter-spacing: 2px; /* Harfler arasýnda hafif boþluk */
+    transition: color 0.3s, text-shadow 0.3s; /* Geçiþ efekti */
+}

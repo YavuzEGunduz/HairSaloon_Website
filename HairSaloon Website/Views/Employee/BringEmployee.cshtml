@@ -1,27 +1,95 @@
 ﻿@model HairSaloon_Website.Models.Employee
 
-<br />
-@using (Html.BeginForm("EditEmployee","Employee",FormMethod.Post))
-{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: Arial, sans-serif;
+        }
 
-	<b>@Html.LabelFor(x=>x.Name)</b>
-	@Html.TextBoxFor(X=>X.Name ,new {@class="form-control"})		
-	
-	<b>@Html.LabelFor(x=>x.Id)</b>
-	@Html.TextBoxFor(X=>X.Id ,new {@class="form-control"})	
+        .container {
+            margin-top: 50px;
+            background-color: #34495e;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
 
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ecf0f1;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #e74c3c, 4px 4px 0 #3498db, 6px 6px 0 #f1c40f;
+        }
 
-	<b>	@Html.LabelFor(x => x.Age)</b>
-	@Html.TextBoxFor(X=>X.Age,new {@class="form-control"})
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-	<b>	@Html.LabelFor(x => x.Working_hours)</b>
-	@Html.TextBoxFor(X=>X.Working_hours ,new {@class="form-control"})
+        label {
+            color: #ecf0f1;
+            text-shadow: 2px 2px 0 #f39c12;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
 
-	<b>	@Html.LabelFor(x => x.ImageUrl)</b>
-	@Html.TextBoxFor(X => X.ImageUrl, new { @class = "form-control" })
-	
+        .btn-primary {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            color: #ecf0f1;
+            text-shadow: 2px 2px 0 #e74c3c;
+            margin-top: 20px;
+        }
 
-	<br />
+            .btn-primary:hover {
+                background-color: #c0392b;
+                border-color: #c0392b;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Employee</h2>
+        @using (Html.BeginForm("EditEmployee", "Employee", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                @Html.TextBoxFor(X => X.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Id">ID</label>
+                @Html.TextBoxFor(X => X.Id, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Age">Age</label>
+                @Html.TextBoxFor(X => X.Age, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Working_hours">Working Hours</label>
+                @Html.TextBoxFor(X => X.Working_hours, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl">Image URL</label>
+                @Html.TextBoxFor(X => X.ImageUrl, new { @class = "form-control" })
+            </div>
+            <button class="btn btn-primary">Done</button>
+        }
+    </div>
 
-	<button class="btn btn-default" >Done</button>
-}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

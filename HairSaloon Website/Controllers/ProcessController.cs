@@ -1,9 +1,11 @@
 ﻿using HairSaloon_Website.Data;
 using HairSaloon_Website.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairSaloon_Website.Controllers
 {
+    [Authorize]
     public class ProcessController : Controller
     {
         private readonly Context _context;
@@ -13,18 +15,27 @@ namespace HairSaloon_Website.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ProcessList()
         {
             var processes = _context.Processes.ToList();
             return View(processes);
         }
 
+        public IActionResult PublicProcessList()
+        {
+            var processes = _context.Processes.ToList();
+            return View(processes);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddProcess()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddProcess(Process process)
         {
@@ -34,6 +45,7 @@ namespace HairSaloon_Website.Controllers
    
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProcess(int id)
         {
             var process = _context.Processes.Find(id);
@@ -45,17 +57,19 @@ namespace HairSaloon_Website.Controllers
             return RedirectToAction("ProcessList");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult BringProcess(int id)
+        public IActionResult EditProcess(int id)
         {
             var process = _context.Processes.Find(id);
             if (process == null)
             {
                 return NotFound();
             }
-            return View("BringProcess", process);
+            return View(process);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditProcess(Process updatedProcess)
         {
@@ -74,4 +88,6 @@ namespace HairSaloon_Website.Controllers
             return View(updatedProcess);
         }
     }
+
 }
+

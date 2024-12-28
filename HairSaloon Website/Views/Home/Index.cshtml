@@ -6,26 +6,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basık Resim</title>
+    <title>Barbershop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            margin: 0; 
-            overflow-x: hidden; 
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #2c3e50;
         }
 
         .custom-img {
-            width: 100%; 
+            width: 100%;
             max-width: 100%;
-            height: 400px; 
-            object-fit: cover; 
+            height: 600px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        .barbershop-container {
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .barbershop {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-size: 6vw; /* Daha büyük yazı boyutu */
+            letter-spacing: 10px;
+            color: #ecf0f1;
+            text-shadow: 3px 3px 0 #e74c3c, 6px 6px 0 #3498db, 9px 9px 0 #f1c40f;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container barbershop-container">
+        <h1 class="barbershop">BARBERSHOP</h1>
+    </div>
+    <div class="container">
         <div class="text-center">
-            <img src="images/images.jpeg" class="custom-img" alt="Basık Resim">
+            <img src="images/pngtree-barbershop-with-several-old-and-antique-chairs-picture-image_3629466.jpg" class="custom-img" alt="Barbershop">
         </div>
     </div>
 </body>

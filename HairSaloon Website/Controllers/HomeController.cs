@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairSaloon_Website.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
 

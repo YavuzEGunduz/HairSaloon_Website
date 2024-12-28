@@ -3,6 +3,7 @@ using HairSaloon_Website.Models;
 using HairSaloon_Website.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairSaloon_Website.Controllers
 {
@@ -16,27 +17,31 @@ namespace HairSaloon_Website.Controllers
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
-        public IActionResult Login()
+        [HttpGet] public IActionResult Login() 
         {
-            return View();
+            return View(); 
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        [HttpPost] public async Task<IActionResult> Login(LoginViewModel model) 
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var user = await userManager.FindByEmailAsync(model.Email);
+                if (user != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var result = await signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+
+                        ModelState.AddModelError(string.Empty, "User not found.");
+                    }
                 }
-
-                ModelState.AddModelError("", "email or password is incorrect");  
-
             }
-
-            return View(model);
+               
+            return View(model); 
         }
 
 
@@ -52,9 +57,8 @@ namespace HairSaloon_Website.Controllers
             {
                 var users = new IdentityUser()
                 {
-                    UserName = model.Email,
+                    UserName = model.Name_Surname,
                     Email = model.Email,
-                    PasswordHash = model.Password,
                 };
                 var result = await userManager.CreateAsync(users, model.Password);
                 if (result.Succeeded)
@@ -66,7 +70,7 @@ namespace HairSaloon_Website.Controllers
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError("", error.Description);
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
 
                 }
@@ -82,5 +86,54 @@ namespace HairSaloon_Website.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        public async Task<IActionResult> UserList()
+        {
+            var users = userManager.Users.ToList();
+            var userViewModels = users.Select(user => new UserViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email // Şifre gösterimi önerilmez
+            }).ToList();
+            
+            return View(userViewModels);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult AssignAdminRole()
+        {
+            return View();
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AssignAdminRole(AssignAdminRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(model.UserEmail);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                    return View(model);
+                }
+
+                var result = await userManager.AddToRoleAsync(user, "Admin");
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = "Admin role assigned successfully.";
+                    return View();
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
     }
 }
+

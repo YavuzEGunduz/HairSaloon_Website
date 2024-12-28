@@ -12,7 +12,7 @@ namespace HairSaloon_Website.Models
 
         public int Time { get; set; }
 
-        public ICollection<EmployeeProcess> EmployeeProcess{ get; set; }
+        public ICollection<EmployeeProcess>? EmployeeProcess{ get; set; }
 
     }
 }
