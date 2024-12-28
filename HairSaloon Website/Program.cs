@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -15,7 +15,7 @@ builder.Services.AddDbContext<HairSaloon_Website.Data.Context>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; // Boþluk ekledik
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; 
     options.User.RequireUniqueEmail = true;
 
     options.Password.RequireDigit = true;
@@ -39,11 +39,11 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.AccessDeniedPath = "/Account/AccessDenied";
 });
 
-builder.Services.AddHttpClient(); // OpenAI API istekleri için HttpClient ekleyin
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
-// Admin rolünü ve admin kullanýcýyý oluþtur
+
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
