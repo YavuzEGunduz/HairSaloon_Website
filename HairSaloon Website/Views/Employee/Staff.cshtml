@@ -60,7 +60,11 @@
 
             .employee-details h5 {
                 margin-bottom: 10px;
-                color: #34495e; /* Yazı rengi mevcut temanın rengi */
+                color: #f1c40f; /* Sarı renk */
+                text-shadow: 2px 2px 0 #e74c3c; /* Kırmızı gölge */
+                font-weight: bold; /* Kalın yazı */
+                font-size: 1.5em; /* Daha büyük yazı */
+                letter-spacing: 0.1em; /* Harfler arası boşluk */
             }
 
             .employee-details p {
@@ -81,7 +85,6 @@
                         <div class="employee-details">
                             <h5>@employee.Name</h5>
                             <p>@employee.Age</p>
-                            <p>WorkTime: @employee.Working_hours</p>
                             @if (employee.EmployeeProcess != null && employee.EmployeeProcess.Any())
                             {
                                 var processNames = string.Join(" / ", employee.EmployeeProcess.OrderBy(p => p.Process.pName).Select(p => p.Process.pName));

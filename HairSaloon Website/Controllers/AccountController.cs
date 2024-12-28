@@ -57,13 +57,14 @@ namespace HairSaloon_Website.Controllers
             {
                 var users = new IdentityUser()
                 {
-                    UserName = model.Name_Surname,
+                    UserName = model.Name_Surname, // Artık boşluk içeren kullanıcı adları destekleniyor.
                     Email = model.Email,
                 };
+
                 var result = await userManager.CreateAsync(users, model.Password);
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(users,false);
+                    await signInManager.SignInAsync(users, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -72,12 +73,12 @@ namespace HairSaloon_Website.Controllers
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-
                 }
-                
             }
             return View(model);
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> LogOut()

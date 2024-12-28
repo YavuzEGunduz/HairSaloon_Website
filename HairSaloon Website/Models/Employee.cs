@@ -15,8 +15,8 @@ namespace HairSaloon_Website.Models
         public int Age { get; set; }
 
         public ICollection<EmployeeProcess>? EmployeeProcess { get; set; }
-        public TimeSpan WorkStartTime { get; set; }  
-        public TimeSpan WorkEndTime { get; set; }
+        public TimeSpan StartHour { get; set; }  
+        public TimeSpan EndHour { get; set; }
         public string ImageUrl { get; set; }
         [NotMapped] 
         public IFormFile ImageFile { get; set; }

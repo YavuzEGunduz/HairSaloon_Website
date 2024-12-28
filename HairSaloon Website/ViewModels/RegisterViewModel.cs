@@ -4,6 +4,7 @@ namespace HairSaloon_Website.ViewModels
 {
     public class RegisterViewModel
     {
+        [Display(Name = "User Name")]
         [Required(ErrorMessage = "Name is required.")]
         public string Name_Surname { get; set; }
 

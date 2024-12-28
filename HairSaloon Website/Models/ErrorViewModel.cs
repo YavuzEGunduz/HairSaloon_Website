@@ -1,4 +1,4 @@
-namespace HairSaloon_Website.Models
+﻿namespace HairSaloon_Website.Models
 {
     public class ErrorViewModel
     {

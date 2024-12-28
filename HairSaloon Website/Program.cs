@@ -14,6 +14,10 @@ builder.Services.AddDbContext<HairSaloon_Website.Data.Context>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
+    options.User.AllowedUserNameCharacters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; // Boþluk ekledik
+    options.User.RequireUniqueEmail = true;
+
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = false;

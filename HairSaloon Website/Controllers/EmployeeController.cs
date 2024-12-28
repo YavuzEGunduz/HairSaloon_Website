@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using HairSaloon_Website.Data;
 using HairSaloon_Website.Models;
-using HairSaloon_Website.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.IO;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 
 namespace HairSaloon_Website.Controllers
@@ -19,38 +17,45 @@ namespace HairSaloon_Website.Controllers
         public EmployeeController(Context context)
         {
             _context = context;
-
         }
+
         public IActionResult Staff()
         {
             var stafflist = _context.Employees
                 .Include(e => e.EmployeeProcess)
                 .ThenInclude(ep => ep.Process)
-                .ToList(); return View(stafflist);
+                .ToList();
+            return View(stafflist);
         }
 
         [Authorize(Roles = "Admin")]
         public IActionResult AdminStaff()
         {
-
             var stafflist = _context.Employees.ToList();
             return View(stafflist);
         }
-
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddEmployee()
         {
-            ViewBag.Processes = _context.Processes.ToList();
+            ViewBag.Processes = _context.Processes.ToList(); // Süreçleri ViewBag ile gönderiyoruz.
             return View();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(Employee employee, int[] selectedProcesses)
+        public IActionResult AddEmployee(Employee employee, List<int> selectedProcesses)
         {
-            // Görsel işlemleri
+            // Null kontrolü
+            if (employee == null)
+            {
+                ModelState.AddModelError("", "Çalışan bilgileri eksik.");
+                ViewBag.Processes = _context.Processes.ToList();
+                return View(employee);
+            }
+
+            // Resim yükleme işlemi
             if (employee.ImageFile != null && employee.ImageFile.Length > 0)
             {
                 var fileName = Path.GetFileName(employee.ImageFile.FileName);
@@ -62,12 +67,12 @@ namespace HairSaloon_Website.Controllers
                 employee.ImageUrl = "/images/" + fileName;
             }
 
-
-            // Çalışan kaydı
+            // Çalışanı kaydet
             _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            if (selectedProcesses != null && selectedProcesses.Any())
+            // Seçilen süreçleri kontrol et
+            if (selectedProcesses != null)
             {
                 foreach (var processId in selectedProcesses)
                 {
@@ -79,11 +84,11 @@ namespace HairSaloon_Website.Controllers
                     _context.EmployeeProcesess.Add(employeeProcess);
                 }
             }
-            await _context.SaveChangesAsync();
+
+            _context.SaveChanges();
 
             return RedirectToAction("AdminStaff");
         }
-
 
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteEmployee(int id)
@@ -108,12 +113,10 @@ namespace HairSaloon_Website.Controllers
             var employee = _context.Employees.Find(updatedEmployee.Id);
             employee.Name = updatedEmployee.Name;
             employee.Age = updatedEmployee.Age;
-            employee.Working_hours = updatedEmployee.Working_hours;
-            employee.ImageUrl = updatedEmployee.ImageUrl;
+            employee.StartHour = updatedEmployee.StartHour;
+            employee.EndHour = updatedEmployee.EndHour;
             _context.SaveChanges();
             return RedirectToAction("AdminStaff");
         }
-
-
     }
 }

@@ -94,15 +94,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "nav-link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "PublicProcessList" ? "nav-link-active" : "")" asp-area="" asp-controller="Process" asp-action="PublicProcessList">Processes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "Staff" ? "nav-link-active" : "")" asp-area="" asp-controller="Employee" asp-action="Staff">Employees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "ApoIndex" ? "nav-link-active" : "")" asp-area="" asp-controller="Appointment" asp-action="ApoIndex">Appointment</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "PublicProcessList" ? "nav-link-active" : "")" asp-area="" asp-controller="Process" asp-action="PublicProcessList">Processes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "Staff" ? "nav-link-active" : "")" asp-area="" asp-controller="Employee" asp-action="Staff">Employees</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light nav-link-hover @(ViewContext.RouteData.Values["action"].ToString() == "ApoIndex" ? "nav-link-active" : "")" asp-area="" asp-controller="Appointment" asp-action="ApoIndex">Appointment</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (SignInManager.IsSignedIn(User))

@@ -13,16 +13,13 @@ namespace HairSaloon_Website.Models
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
-        [Required]
         public int ProcessId { get; set; }
         public Process Process { get; set; }
 
-        [Required]
         public string UserId { get; set; }
         public IdentityUser User { get; set; }
 
-        [Required]
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

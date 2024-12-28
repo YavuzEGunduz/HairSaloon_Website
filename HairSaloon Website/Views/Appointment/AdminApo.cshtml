@@ -1,11 +1,12 @@
-﻿@model List<HairSaloon_Website.Models.Appointment>
+﻿@using System.Globalization
+@model List<HairSaloon_Website.Models.Appointment>
 
-<h2>Randevu Listesi</h2>
+<h2>Appointment List</h2>
 
 @if (!Model.Any())
 {
     <div class="no-appointment">
-        Randevu yok
+        There is No Appointment
     </div>
 }
 else
@@ -13,27 +14,31 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Tarih</th>
-                <th scope="col">Çalışan</th>
-                <th scope="col">Hizmet</th>
-                <th scope="col">Saat</th>
-                <th scope="col">İşlem</th>
+                <th scope="col">Date</th>
+                <th scope="col">User</th>
+                <th scope="col">Employee</th>
+                <th scope="col">Process</th>
+                <th scope="col">Price</th>
+                <th scope="col">Cancel</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var appointment in Model.OrderBy(a => a.Date))
             {
                 <tr>
+                    
                     <td>@appointment.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@appointment.User.UserName</td>
                     <td>@appointment.Employee.Name</td>
                     <td>@appointment.Process.pName</td>
-                    <td>@appointment.Date.ToShortTimeString()</td>
+                    <td>@appointment.Process.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</td>
+
                     <td>
                         <form asp-controller="Appointment" asp-action="DeleteAppointment" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@appointment.Id" />
                             <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
                             <!-- Mevcut sayfa URL'sini gizli alan olarak gönder -->
-                            <button type="submit" class="btn btn-danger">Sil</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
                         </form>
                     </td>
                 </tr>

@@ -1,4 +1,5 @@
-﻿@model List<Process>
+﻿@using System.Globalization
+@model List<Process>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,8 +95,8 @@
                     <th>Process</th>
                     <th>Time</th>
                     <th>Price</th>
-                    <th>Güncelle</th>
-                    <th>Sil</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,7 +106,7 @@
                         <td>@employee.Id</td>
                         <td>@employee.pName</td>
                         <td>@employee.Time</td>
-                        <td>@employee.Price</td>
+                        <td>@employee.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</td>
                         <td><a href="/Process/EditProcess/@employee.Id" class="btn btn-warning">Edit</a></td>
                         <td><a href="/Process/DeleteProcess/@employee.Id" class="btn btn-danger">Delete</a></td>
                     </tr>

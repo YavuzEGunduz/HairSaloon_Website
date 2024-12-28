@@ -21,6 +21,7 @@
             height: 600px;
             object-fit: cover;
             margin-top: 20px;
+            border-radius: 8px;
         }
 
         .barbershop-container {
@@ -36,6 +37,77 @@
             text-shadow: 3px 3px 0 #e74c3c, 6px 6px 0 #3498db, 9px 9px 0 #f1c40f;
             margin-bottom: 20px;
         }
+
+        .content-container {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 40px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-top: 30px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #ecf0f1;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #e74c3c, 4px 4px 0 #3498db, 6px 6px 0 #f1c40f;
+            margin-top: 50px; /* Başlıkların üst boşluğu artırıldı */
+            margin-bottom: 30px; /* Başlıkların alt boşluğu artırıldı */
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6em;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .service-list {
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+            .service-list li {
+                margin-bottom: 15px;
+                font-size: 1.2em;
+            }
+
+                .service-list li strong {
+                    color: #ecf0f1;
+                }
+
+        .divider {
+            height: 2px;
+            background-color: #ecf0f1;
+            margin: 40px 0;
+        }
+
+        .row {
+            margin-bottom: 60px; /* Satırların alt boşluğu artırıldı */
+        }
+
+            .row .col-md-6 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .row .col-md-6 img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+                }
     </style>
 </head>
 <body>
@@ -43,9 +115,72 @@
         <h1 class="barbershop">BARBERSHOP</h1>
     </div>
     <div class="container">
-        <div class="text-center">
+        <div class="text-center image-container">
             <img src="images/pngtree-barbershop-with-several-old-and-antique-chairs-picture-image_3629466.jpg" class="custom-img" alt="Barbershop">
         </div>
+        <div class="content-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <h2>Hoş Geldiniz!</h2>
+                        <p><span class="highlight">Barbershop</span>'ta, yalnızca saç ve sakalınızı kesmekle kalmıyor, aynı zamanda tarzınıza yeni bir soluk getiriyoruz. Geleneksel berberlik kültürünü modern dokunuşlarla harmanlayan salonumuzda, müşteri memnuniyeti en önemli önceliğimizdir.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="images/first.jpg" alt="Welcome to Barbershop">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <div>
+                        <h2>Sanat ve Zarafet</h2>
+                        <p>Her saç kesimi, her tıraş bir sanat eseridir. Uzman berberlerimiz, her müşterinin ihtiyaçlarını ve isteklerini dinleyerek, kişiye özel hizmet sunar. Bizimle, kendinizi her zaman en iyi şekilde hissedeceksiniz.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <img src="images/second.jpg" alt="Art and Elegance">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <h2>Rahat ve Şık Atmosfer</h2>
+                        <p>Salonumuzun rahat ve şık atmosferinde, sadece berber hizmeti almazsınız, aynı zamanda keyifli vakit geçirirsiniz. Modern dekorasyonumuz, samimi ve profesyonel ekibimizle birleşerek, sizi daima evinizde gibi hissettirir.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="images/Happy.jpg" alt="Comfortable Atmosphere">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <div>
+                        <h2>Kalite ve Özen</h2>
+                        <p>Kullandığımız tüm ürünler, yüksek kalite standartlarına sahip olup, sağlığınızı ve rahatlığınızı ön planda tutar. Sizlere, en iyi sonuçları sunmak için sürekli olarak kendimizi geliştiriyoruz.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <img src="images/actuallast.jpg" alt="Quality and Care">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="divider"></div>
+
+            <h3>Barbershop ailesi olarak, sizleri aramızda görmekten mutluluk duyuyoruz. Tarzınızı yeniden keşfetmek ve berberlik hizmetinde en iyisini deneyimlemek için bekliyoruz!</h3>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

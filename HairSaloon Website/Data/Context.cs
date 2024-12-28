@@ -8,7 +8,7 @@ using System.Reflection.Emit;
 namespace HairSaloon_Website.Data
 {
     public class Context : IdentityDbContext
-    {   
+    {
 
         public Context(DbContextOptions<Context> options) : base(options)
         { }

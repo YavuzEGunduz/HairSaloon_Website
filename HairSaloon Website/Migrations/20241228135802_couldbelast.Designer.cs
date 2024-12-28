@@ -4,6 +4,7 @@ using HairSaloon_Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairSaloon_Website.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241228135802_couldbelast")]
+    partial class couldbelast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,9 +68,6 @@ namespace HairSaloon_Website.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("EndHour")
-                        .HasColumnType("time");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +76,10 @@ namespace HairSaloon_Website.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("StartHour")
+                    b.Property<TimeSpan>("WorkEndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("WorkStartTime")
                         .HasColumnType("time");
 
                     b.HasKey("Id");
